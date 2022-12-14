@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 
-public class Test : MonoBehaviour
+public class DrawLine : MonoBehaviour
 {
     public Camera cam;
     public Material defaultMaterial;
@@ -20,12 +20,15 @@ public class Test : MonoBehaviour
 
     void DrawMouse()
     {
+        //카메라 기준좌표 설정
         Vector3 mousePos = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.3f));
 
+        //처음 눌렀을때 라인 시작
         if (Input.GetMouseButtonDown(0))
         {
             createLine(mousePos);
         }
+        //계속 누르고 있을때 라인 연결
         else if (Input.GetMouseButton(0))
         {
             connectLine(mousePos);
@@ -54,6 +57,7 @@ public class Test : MonoBehaviour
 
     void connectLine(Vector3 mousePos)
     {
+        //눌렀을때 계속 적용되지 않고 일정 수치 이상 이동시 적용
         if (PrevPos != null && Mathf.Abs(Vector3.Distance(PrevPos, mousePos)) >= 0.001f)
         {
             PrevPos = mousePos;
